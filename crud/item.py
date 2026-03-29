@@ -14,7 +14,7 @@ from models.item import Item
 from schemas.item import ItemCreate, ItemUpdate
 
 
-def get_item(db: Session, item_id: int, owner_id: Optional[int] = None) -> Optional[Item]:
+def getItem(db: Session, itemId: int, ownerId: Optional[int] = None) -> Optional[Item]:
     """
     Retrieve a single Item by its ID, optionally filtering by owner_id.
 
@@ -26,9 +26,9 @@ def get_item(db: Session, item_id: int, owner_id: Optional[int] = None) -> Optio
     Returns:
         Optional[Item]: The Item instance or None if not found.
     """
-    query = db.query(Item).filter(Item.id == item_id)
-    if owner_id is not None:
-        query = query.filter(Item.owner_id == owner_id)
+    query = db.query(Item).filter(Item.id == itemId)
+    if ownerId is not None:
+        query = query.filter(Item.owner_id == ownerId)
     return query.first()
 
 
@@ -56,7 +56,7 @@ def get_items(
     return query.offset(skip).limit(limit).all()
 
 
-def create_item(db: Session, item_data: ItemCreate, owner_id: int) -> Item:
+def createItem(db: Session, itemData: ItemCreate, ownerId: int) -> Item:
     """
     Create a new Item instance for a specific owner.
 
@@ -68,7 +68,7 @@ def create_item(db: Session, item_data: ItemCreate, owner_id: int) -> Item:
     Returns:
         Item: The created Item instance.
     """
-    item = Item(**item_data.dict(), owner_id=owner_id)
+    item = Item(**itemData.dict(), owner_id=ownerId)
     db.add(item)
     db.commit()
     db.refresh(item)
