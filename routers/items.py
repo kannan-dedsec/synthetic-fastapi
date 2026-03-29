@@ -59,7 +59,7 @@ _items_db: List[Item] = []
     response_model=List[Item],
     summary="List items with pagination and filtering"
 )
-def list_items(
+def listItems(  # Changed to camelCase
     skip: int = Query(0, ge=0, description="Number of items to skip"),
     limit: int = Query(10, ge=1, le=100, description="Max items to return"),
     name: Optional[str] = Query(None, description="Filter by item name"),
@@ -92,7 +92,7 @@ def list_items(
     response_model=Item,
     summary="Get an item by ID"
 )
-def get_item(item_id: UUID) -> Item:
+def getItem(item_id: UUID) -> Item:  # Changed to camelCase
     """
     Retrieve a single item by its ID.
     """
@@ -111,7 +111,7 @@ def get_item(item_id: UUID) -> Item:
     status_code=status.HTTP_201_CREATED,
     summary="Create a new item"
 )
-def create_item(item: ItemCreate) -> Item:
+def createItem(item: ItemCreate) -> Item:  # Changed to camelCase
     """
     Create a new item and add it to the database.
     """
