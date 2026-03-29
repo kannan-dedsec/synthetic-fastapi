@@ -14,7 +14,6 @@ from pydantic import BaseSettings, Field, validator
 class AppSettings(BaseSettings):
     """
     Application settings loaded from environment variables or .env file.
-
     Attributes:
         database_url (str): Database connection URL.
         secret_key (str): Secret key for cryptographic operations.
@@ -64,10 +63,4 @@ settings = AppSettings()
 
 
 def get_settings() -> AppSettings:
-    """
-    Returns the current application settings instance.
-
-    Returns:
-        AppSettings: The current settings.
-    """
     return settings
