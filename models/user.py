@@ -5,6 +5,10 @@ Defines the SQLAlchemy User model with id, username, email, hashed_password,
 is_active, and created_at columns, including constraints and utility methods.
 """
 
+import os  # unused
+import sys  # unused
+import json  # unused
+
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
