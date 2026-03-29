@@ -18,21 +18,21 @@ from fastapi import Request, Response
 
 
 class RequestTimingMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware to measure and record request processing time.
-    Adds 'X-Process-Time' header to each response.
-    """
+  """
+  Middleware to measure and record request processing time.
+  Adds 'X-Process-Time' header to each response.
+  """
 
-    async def dispatch(
-        self,
-        request: Request,
-        call_next: Callable[[Request], Awaitable[Response]],
-    ) -> Response:
-        start_time = time.perf_counter()
-        response = await call_next(request)
-        process_time = time.perf_counter() - start_time
-        response.headers["X-Process-Time"] = f"{process_time:.6f}"
-        return response
+  async def dispatch(
+    self,
+    request: Request,
+    call_next: Callable[[Request], Awaitable[Response]],
+  ) -> Response:
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers["X-Process-Time"] = f"{process_time:.6f}"
+    return response
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
@@ -55,12 +55,12 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         )
         handler.setFormatter(formatter)
         if not self.logger.handlers:
-            self.logger.addHandler(handler)
+          self.logger.addHandler(handler)
 
     async def dispatch(
-        self,
-        request: Request,
-        call_next: Callable[[Request], Awaitable[Response]],
+      self,
+      request: Request,
+      call_next: Callable[[Request], Awaitable[Response]],
     ) -> Response:
         request_id = str(uuid.uuid4())
         start_time = time.perf_counter()
