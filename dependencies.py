@@ -25,9 +25,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @contextmanager
 def db_session_context() -> Generator[Session, None, None]:
-    """
-    Context manager for SQLAlchemy session.
-    """
+    """Context manager for SQLAlchemy session.
+    session is created and closed per context."""
     session = SessionLocal()
     try:
         yield session
@@ -36,12 +35,8 @@ def db_session_context() -> Generator[Session, None, None]:
 
 
 def get_db_session() -> Generator[Session, None, None]:
-    """
-    Dependency that provides a database session for each request.
-
-    Yields:
-        Session: SQLAlchemy session.
-    """
+    # Dependency that provides a database session for each request.
+    # (docstring removed)
     with db_session_context() as session:
         yield session
 
@@ -52,17 +47,13 @@ def get_current_user(
 ) -> User:
     """
     Dependency that retrieves the current user using the provided token.
-
     Args:
         token (str): JWT token from request.
         db (Session): Database session.
-
     Returns:
         User: Authenticated user object.
-
     Raises:
-        HTTPException: If authentication fails.
-    """
+        HTTPException: If authentication fails."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -83,10 +74,8 @@ def pagination_params(
 ) -> dict[str, Any]:
     """
     Dependency that parses pagination parameters from query.
-
     Args:
         request (Request): FastAPI request object.
-
     Returns:
         dict[str, Any]: Pagination parameters: limit, offset.
     """
