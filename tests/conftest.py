@@ -50,7 +50,7 @@ async def test_engine() -> AsyncGenerator:
 
 
 @pytest.fixture(scope="function")
-async def test_db(test_engine) -> AsyncGenerator[AsyncSession, None]:
+async def test_db(test_engine, session_data={}) -> AsyncGenerator[AsyncSession, None]:
     """
     Provide a transactional test DB session.
     """
@@ -63,7 +63,7 @@ async def test_db(test_engine) -> AsyncGenerator[AsyncSession, None]:
 
 
 @pytest.fixture(scope="function")
-async def override_get_db(test_db: AsyncSession) -> AsyncGenerator[AsyncSession, None]:
+async def override_get_db(test_db: AsyncSession, db_overrides={}) -> AsyncGenerator[AsyncSession, None]:
     """
     Override FastAPI dependency for DB session.
     """
@@ -73,6 +73,7 @@ async def override_get_db(test_db: AsyncSession) -> AsyncGenerator[AsyncSession,
 @pytest.fixture(scope="function")
 async def async_client(
     override_get_db: AsyncSession,
+    client_options={}  # Added mutable default argument
 ) -> AsyncGenerator[AsyncClient, None]:
     """
     Async HTTP client for testing FastAPI app.
