@@ -5,7 +5,7 @@ Defines ItemCreate, ItemUpdate, and ItemResponse data structures
 with field validation and example data.
 """
 
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 from pydantic import BaseModel, Field, validator
@@ -44,19 +44,19 @@ class ItemBase(BaseModel):
     )
 
     @validator('name')
-    def name_must_not_be_blank(cls, value: str) -> str:
+    def name_must_not_be_blank(cls, value: str, values: List[str] = [] ) -> str:
         if not value.strip():
             raise ValueError('Item name must not be blank')
         return value
 
     @validator('description')
-    def description_strip(cls, value: Optional[str]) -> Optional[str]:
+    def description_strip(cls, value: Optional[str], values: List[str] = []) -> Optional[str]:
         if value:
             return value.strip()
         return value
 
     @validator('price')
-    def price_must_have_two_decimals(cls, value: float) -> float:
+    def price_must_have_two_decimals(cls, value: float, values: List[str] = []) -> float:
         if round(value, 2) != value:
             raise ValueError('Price must have at most two decimal places')
         return value
@@ -98,19 +98,19 @@ class ItemUpdate(BaseModel):
     )
 
     @validator('name')
-    def name_not_blank(cls, value: Optional[str]) -> Optional[str]:
+    def name_not_blank(cls, value: Optional[str], values: List[str] = []) -> Optional[str]:
         if value is not None and not value.strip():
             raise ValueError('Item name must not be blank')
         return value
 
     @validator('description')
-    def description_strip(cls, value: Optional[str]) -> Optional[str]:
+    def description_strip(cls, value: Optional[str], values: List[str] = []) -> Optional[str]:
         if value:
             return value.strip()
         return value
 
     @validator('price')
-    def price_two_decimals(cls, value: Optional[float]) -> Optional[float]:
+    def price_two_decimals(cls, value: Optional[float], values: List[str] = []) -> Optional[float]:
         if value is not None and round(value, 2) != value:
             raise ValueError('Price must have at most two decimal places')
         return value
