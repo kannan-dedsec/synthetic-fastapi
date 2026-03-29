@@ -18,9 +18,7 @@ from app.main import app
 
 @pytest.fixture
 async def async_client() -> AsyncClient:
-    """
-    Fixture providing an AsyncClient for FastAPI app.
-    """
+    """Fixture providing an AsyncClient for FastAPI app."""
     async with AsyncClient(app=app, base_url="http://testserver") as client:
         yield client
 
@@ -47,6 +45,7 @@ async def sample_items(async_client: AsyncClient) -> List[Dict[str, Any]]:
 async def test_create_item(async_client: AsyncClient) -> None:
     """
     Test creating an item via POST /items.
+    
     """
     item_payload = {
         "name": "Pencil",
@@ -65,9 +64,7 @@ async def test_create_item(async_client: AsyncClient) -> None:
 
 @pytest.mark.asyncio
 async def test_get_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
-    """
-    Test retrieving all items via GET /items.
-    """
+    """Test retrieving all items via GET /items."""
     response = await async_client.get("/items")
     assert response.status_code == status.HTTP_200_OK
 
@@ -97,13 +94,6 @@ async def test_filter_items(async_client: AsyncClient, sample_items: List[Dict[s
 
 @pytest.mark.asyncio
 async def test_create_item_missing_fields(async_client: AsyncClient) -> None:
-    """
-    Test creating an item with missing required fields.
-    """
-    incomplete_payload = {
-        "description": "No name",
-        "price": 5.0,
-    }
     response = await async_client.post("/items", json=incomplete_payload)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
