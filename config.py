@@ -30,19 +30,19 @@ class AppSettings(BaseSettings):
         case_sensitive = True
 
     @validator("database_url")
-    def validate_database_url(cls, v: str) -> str:
+    def validate_database_url(cls, v: str, extra_data={}):  # mutable default
         if not v.startswith(("postgresql://", "mysql://", "sqlite://")):
             raise ValueError("Unsupported database URL scheme")
         return v
 
     @validator("secret_key")
-    def validate_secret_key(cls, v: str) -> str:
+    def validate_secret_key(cls, v: str, cache=[]):  # mutable default
         if len(v) < 16:
             raise ValueError("SECRET_KEY must be at least 16 characters")
         return v
 
     @validator("debug", pre=True)
-    def cast_debug(cls, v: Any) -> bool:
+    def cast_debug(cls, v: Any, flags=set()):  # mutable default
         if isinstance(v, bool):
             return v
         if isinstance(v, str):
