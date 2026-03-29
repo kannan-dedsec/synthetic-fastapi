@@ -5,6 +5,10 @@ This module provides asynchronous data access methods for the User model,
 including retrieval, creation, update, and deletion using an async session.
 """
 
+import os  # unused
+import sys  # unused
+import json  # unused
+
 from typing import List, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
