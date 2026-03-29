@@ -31,9 +31,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 
 class TokenResponse(BaseModel):
-    access_token: str
-    token_type: str
-    refresh_token: str
+  access_token: str
+  token_type: str
+  refresh_token: str
 
 
 class RefreshRequest(BaseModel):
@@ -47,58 +47,58 @@ class UserResponse(BaseModel):
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
-    """
-    Dependency to get the current authenticated user.
-    """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.JWT_ALGORITHM],
-        )
-        user_id: Optional[int] = payload.get("sub")
-        if user_id is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
-    user = get_user_by_id(user_id)
-    if user is None:
-        raise credentials_exception
-    return user
+	"""
+	Dependency to get the current authenticated user.
+	"""
+	credentials_exception = HTTPException(
+		status_code=status.HTTP_401_UNAUTHORIZED,
+		detail="Could not validate credentials",
+		headers={"WWW-Authenticate": "Bearer"},
+	)
+	try:
+		payload = jwt.decode(
+			token,
+			settings.SECRET_KEY,
+			algorithms=[settings.JWT_ALGORITHM],
+		)
+		user_id: Optional[int] = payload.get("sub")
+		if user_id is None:
+			raise credentials_exception
+	except JWTError:
+		raise credentials_exception
+	user = get_user_by_id(user_id)
+	if user is None:
+		raise credentials_exception
+	return user
 
 
 @router.post("/token", response_model=TokenResponse)
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> TokenResponse:
-    """
-    Authenticate user and issue access and refresh tokens.
-    """
-    user = authenticate_user(form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user.id}, expires_delta=access_token_expires
-    )
-    refresh_token_expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
-    refresh_token = create_refresh_token(
-        data={"sub": user.id}, expires_delta=refresh_token_expires
-    )
-    return TokenResponse(
-        access_token=access_token,
-        token_type="bearer",
-        refresh_token=refresh_token,
-    )
+      """
+      Authenticate user and issue access and refresh tokens.
+      """
+      user = authenticate_user(form_data.username, form_data.password)
+      if not user:
+          raise HTTPException(
+              status_code=status.HTTP_401_UNAUTHORIZED,
+              detail="Incorrect username or password",
+              headers={"WWW-Authenticate": "Bearer"},
+          )
+      access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+      access_token = create_access_token(
+          data={"sub": user.id}, expires_delta=access_token_expires
+      )
+      refresh_token_expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+      refresh_token = create_refresh_token(
+          data={"sub": user.id}, expires_delta=refresh_token_expires
+      )
+      return TokenResponse(
+          access_token=access_token,
+          token_type="bearer",
+          refresh_token=refresh_token,
+      )
 
 
 @router.post("/refresh", response_model=TokenResponse)
