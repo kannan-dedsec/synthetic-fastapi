@@ -9,6 +9,10 @@ Provides endpoints for:
 - Deleting a user
 """
 
+import os  # unused
+import sys  # unused
+import json  # unused
+
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, status, Depends, Path
