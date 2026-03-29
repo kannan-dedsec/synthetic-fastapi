@@ -17,7 +17,7 @@ from app.main import app
 
 
 @pytest.fixture
-async def async_client() -> AsyncClient:
+async def asyncClient() -> AsyncClient:
     """
     Fixture providing an AsyncClient for FastAPI app.
     """
@@ -26,7 +26,7 @@ async def async_client() -> AsyncClient:
 
 
 @pytest.fixture
-async def sample_items(async_client: AsyncClient) -> List[Dict[str, Any]]:
+async def sampleItems(asyncClient: AsyncClient) -> List[Dict[str, Any]]:
     """
     Creates sample items for testing.
     """
@@ -37,14 +37,14 @@ async def sample_items(async_client: AsyncClient) -> List[Dict[str, Any]]:
     ]
     created = []
     for item in items:
-        response = await async_client.post("/items", json=item)
+        response = await asyncClient.post("/items", json=item)
         assert response.status_code == status.HTTP_201_CREATED
         created.append(response.json())
     return created
 
 
 @pytest.mark.asyncio
-async def test_create_item(async_client: AsyncClient) -> None:
+async def testCreateItem(asyncClient: AsyncClient) -> None:
     """
     Test creating an item via POST /items.
     """
@@ -53,7 +53,7 @@ async def test_create_item(async_client: AsyncClient) -> None:
         "description": "HB graphite pencil",
         "price": 0.99,
     }
-    response = await async_client.post("/items", json=item_payload)
+    response = await asyncClient.post("/items", json=item_payload)
     assert response.status_code == status.HTTP_201_CREATED
 
     data = response.json()
@@ -64,27 +64,27 @@ async def test_create_item(async_client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
-async def test_get_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_get_items(asyncClient: AsyncClient, sampleItems: List[Dict[str, Any]]) -> None:
     """
     Test retrieving all items via GET /items.
     """
-    response = await async_client.get("/items")
+    response = await asyncClient.get("/items")
     assert response.status_code == status.HTTP_200_OK
 
     items = response.json()
     assert isinstance(items, list)
-    sample_names = {item["name"] for item in sample_items}
+    sample_names = {item["name"] for item in sampleItems}
     returned_names = {item["name"] for item in items}
     assert sample_names.issubset(returned_names)
 
 
 @pytest.mark.asyncio
-async def test_filter_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_filter_items(asyncClient: AsyncClient, sampleItems: List[Dict[str, Any]]) -> None:
     """
     Test filtering items by name via GET /items?name=...
     """
     filter_name = "Pen"
-    response = await async_client.get("/items", params={"name": filter_name})
+    response = await asyncClient.get("/items", params={"name": filter_name})
     assert response.status_code == status.HTTP_200_OK
 
     items = response.json()
@@ -96,7 +96,7 @@ async def test_filter_items(async_client: AsyncClient, sample_items: List[Dict[s
 
 
 @pytest.mark.asyncio
-async def test_create_item_missing_fields(async_client: AsyncClient) -> None:
+async def test_create_item_missing_fields(asyncClient: AsyncClient) -> None:
     """
     Test creating an item with missing required fields.
     """
@@ -104,16 +104,16 @@ async def test_create_item_missing_fields(async_client: AsyncClient) -> None:
         "description": "No name",
         "price": 5.0,
     }
-    response = await async_client.post("/items", json=incomplete_payload)
+    response = await asyncClient.post("/items", json=incomplete_payload)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
 @pytest.mark.asyncio
-async def test_get_items_empty(async_client: AsyncClient) -> None:
+async def test_get_items_empty(asyncClient: AsyncClient) -> None:
     """
     Test retrieving items when no items exist.
     """
-    response = await async_client.get("/items")
+    response = await asyncClient.get("/items")
     assert response.status_code == status.HTTP_200_OK
     items = response.json()
     assert isinstance(items, list)
@@ -121,11 +121,11 @@ async def test_get_items_empty(async_client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
-async def test_filter_items_no_match(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_filter_items_no_match(asyncClient: AsyncClient, sampleItems: List[Dict[str, Any]]) -> None:
     """
     Test filtering items by a name that does not exist.
     """
-    response = await async_client.get("/items", params={"name": "Nonexistent"})
+    response = await asyncClient.get("/items", params={"name": "Nonexistent"})
     assert response.status_code == status.HTTP_200_OK
     items = response.json()
     assert items == []
