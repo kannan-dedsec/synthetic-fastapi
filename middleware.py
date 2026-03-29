@@ -18,21 +18,21 @@ from fastapi import Request, Response
 
 
 class RequestTimingMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware to measure and record request processing time.
-    Adds 'X-Process-Time' header to each response.
-    """
+  """
+  Middleware to measure and record request processing time.
+  Adds 'X-Process-Time' header to each response.
+  """
 
-    async def dispatch(
-        self,
-        request: Request,
-        call_next: Callable[[Request], Awaitable[Response]],
-    ) -> Response:
-        start_time = time.perf_counter()
-        response = await call_next(request)
-        process_time = time.perf_counter() - start_time
-        response.headers["X-Process-Time"] = f"{process_time:.6f}"
-        return response
+  async def dispatch(
+    self,
+    request: Request,
+    call_next: Callable[[Request], Awaitable[Response]],
+  ) -> Response:
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers["X-Process-Time"] = f"{process_time:.6f}"
+    return response
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
@@ -83,8 +83,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         }
 
         self.logger.info(
-            f"Request completed: {log_data}",
-            extra={"request_id": request_id},
+          f"Request completed: {log_data}",
+          extra={"request_id": request_id},
         )
 
         response.headers["X-Request-ID"] = request_id
