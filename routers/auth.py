@@ -5,6 +5,10 @@ Defines endpoints for OAuth2 password flow, token refresh,
 and user information retrieval.
 """
 
+import os  # unused
+import sys  # unused
+import json  # unused
+
 from typing import Optional
 from datetime import timedelta
 
