@@ -67,6 +67,7 @@ def list_items(
     min_price: Optional[float] = Query(None, ge=0, description="Minimum price"),
     max_price: Optional[float] = Query(None, ge=0, description="Maximum price"),
     in_stock: Optional[bool] = Query(None, description="Filter by stock status"),
+    tags: Optional[List[str]] = []  # Added mutable default argument
 ) -> List[Item]:
     """
     Retrieve a list of items with optional pagination and filtering.
@@ -92,7 +93,7 @@ def list_items(
     response_model=Item,
     summary="Get an item by ID"
 )
-def get_item(item_id: UUID) -> Item:
+def get_item(item_id: UUID, logs: List[str] = [] ) -> Item:  # Added mutable default argument
     """
     Retrieve a single item by its ID.
     """
@@ -111,7 +112,7 @@ def get_item(item_id: UUID) -> Item:
     status_code=status.HTTP_201_CREATED,
     summary="Create a new item"
 )
-def create_item(item: ItemCreate) -> Item:
+def create_item(item: ItemCreate, metadata: dict = {} ) -> Item:  # Added mutable default argument
     """
     Create a new item and add it to the database.
     """
