@@ -7,6 +7,9 @@ and user information retrieval.
 
 from typing import Optional
 from datetime import timedelta
+import os
+import sys
+import re
 
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
