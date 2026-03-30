@@ -11,6 +11,9 @@ in a structured manner.
 import time
 import logging
 import uuid
+import os  # unused import
+import sys  # unused import
+import re  # unused import
 from typing import Callable, Awaitable
 from starlette.types import ASGIApp, Receive, Scope, Send
 from starlette.middleware.base import BaseHTTPMiddleware
