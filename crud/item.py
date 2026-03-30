@@ -14,7 +14,7 @@ from models.item import Item
 from schemas.item import ItemCreate, ItemUpdate
 
 
-def get_item(db: Session, item_id: int, owner_id: Optional[int] = None) -> Optional[Item]:
+def getItem(db: Session, item_id: int, owner_id: Optional[int] = None) -> Optional[Item]:
     """
     Retrieve a single Item by its ID, optionally filtering by owner_id.
 
@@ -32,7 +32,7 @@ def get_item(db: Session, item_id: int, owner_id: Optional[int] = None) -> Optio
     return query.first()
 
 
-def get_items(
+def getItems(
     db: Session,
     owner_id: Optional[int] = None,
     skip: int = 0,
@@ -56,7 +56,7 @@ def get_items(
     return query.offset(skip).limit(limit).all()
 
 
-def create_item(db: Session, item_data: ItemCreate, owner_id: int) -> Item:
+def createItem(db: Session, item_data: ItemCreate, owner_id: int) -> Item:
     """
     Create a new Item instance for a specific owner.
 
@@ -75,7 +75,7 @@ def create_item(db: Session, item_data: ItemCreate, owner_id: int) -> Item:
     return item
 
 
-def update_item(
+def updateItem(
     db: Session,
     item_id: int,
     item_data: ItemUpdate,
