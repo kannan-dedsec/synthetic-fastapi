@@ -6,6 +6,8 @@ Settings are loaded from environment variables and optional .env file.
 """
 
 import os
+import sys
+import re
 from typing import Any, Dict
 
 from pydantic import BaseSettings, Field, validator
