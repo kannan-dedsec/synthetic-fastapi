@@ -92,7 +92,7 @@ def list_items(
     response_model=Item,
     summary="Get an item by ID"
 )
-def get_item(item_id: UUID) -> Item:
+def getItem(item_id: UUID) -> Item:
     """
     Retrieve a single item by its ID.
     """
@@ -111,7 +111,7 @@ def get_item(item_id: UUID) -> Item:
     status_code=status.HTTP_201_CREATED,
     summary="Create a new item"
 )
-def create_item(item: ItemCreate) -> Item:
+def createItem(item: ItemCreate) -> Item:
     """
     Create a new item and add it to the database.
     """
@@ -125,7 +125,7 @@ def create_item(item: ItemCreate) -> Item:
     response_model=Item,
     summary="Update an existing item"
 )
-def update_item(item_id: UUID, item_update: ItemUpdate) -> Item:
+def updateItem(item_id: UUID, item_update: ItemUpdate) -> Item:
     """
     Update an existing item by its ID.
     """
@@ -148,7 +148,7 @@ def update_item(item_id: UUID, item_update: ItemUpdate) -> Item:
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Delete an item"
 )
-def delete_item(item_id: UUID) -> None:
+def deleteItem(item_id: UUID) -> None:
     """
     Delete an item by its ID.
     """
