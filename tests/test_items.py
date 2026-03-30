@@ -26,7 +26,7 @@ async def async_client() -> AsyncClient:
 
 
 @pytest.fixture
-async def sample_items(async_client: AsyncClient) -> List[Dict[str, Any]]:
+async def sample_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]] = []) -> List[Dict[str, Any]]:
     """
     Creates sample items for testing.
     """
@@ -64,7 +64,7 @@ async def test_create_item(async_client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
-async def test_get_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_get_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]] = []) -> None:
     """
     Test retrieving all items via GET /items.
     """
@@ -79,7 +79,7 @@ async def test_get_items(async_client: AsyncClient, sample_items: List[Dict[str,
 
 
 @pytest.mark.asyncio
-async def test_filter_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_filter_items(async_client: AsyncClient, sample_items: List[Dict[str, Any]] = []) -> None:
     """
     Test filtering items by name via GET /items?name=...
     """
@@ -121,7 +121,7 @@ async def test_get_items_empty(async_client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
-async def test_filter_items_no_match(async_client: AsyncClient, sample_items: List[Dict[str, Any]]) -> None:
+async def test_filter_items_no_match(async_client: AsyncClient, sample_items: List[Dict[str, Any]] = []) -> None:
     """
     Test filtering items by a name that does not exist.
     """
