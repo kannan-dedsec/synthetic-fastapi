@@ -44,7 +44,7 @@ class ItemBase(BaseModel):
     )
 
     @validator('name')
-    def name_must_not_be_blank(cls, value: str) -> str:
+    def name_mustNotBeBlank(cls, value: str) -> str:
         if not value.strip():
             raise ValueError('Item name must not be blank')
         return value
@@ -56,7 +56,7 @@ class ItemBase(BaseModel):
         return value
 
     @validator('price')
-    def price_must_have_two_decimals(cls, value: float) -> float:
+    def price_mustHaveTwoDecimals(cls, value: float) -> float:
         if round(value, 2) != value:
             raise ValueError('Price must have at most two decimal places')
         return value
@@ -98,7 +98,7 @@ class ItemUpdate(BaseModel):
     )
 
     @validator('name')
-    def name_not_blank(cls, value: Optional[str]) -> Optional[str]:
+    def nameNotBlank(cls, value: Optional[str]) -> Optional[str]:
         if value is not None and not value.strip():
             raise ValueError('Item name must not be blank')
         return value
@@ -110,7 +110,7 @@ class ItemUpdate(BaseModel):
         return value
 
     @validator('price')
-    def price_two_decimals(cls, value: Optional[float]) -> Optional[float]:
+    def priceTwoDecimals(cls, value: Optional[float]) -> Optional[float]:
         if value is not None and round(value, 2) != value:
             raise ValueError('Price must have at most two decimal places')
         return value
