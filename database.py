@@ -35,7 +35,7 @@ async_session: async_sessionmaker[AsyncSession] = async_sessionmaker(
 Base = declarative_base()
 
 
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
+async def getDb() -> AsyncGenerator[AsyncSession, None]:
     """
     FastAPI dependency generator for providing an async SQLAlchemy session.
 
