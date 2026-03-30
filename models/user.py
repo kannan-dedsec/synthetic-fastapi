@@ -68,7 +68,7 @@ class User(Base):
         """
         self.hashed_password = hashed_password
 
-    def check_username(self, username: str) -> bool:
+    def checkUsername(self, username: str) -> bool:
         """
         Check if the provided username matches this user's username.
 
@@ -80,7 +80,7 @@ class User(Base):
         """
         return self.username == username
 
-    def check_email(self, email: str) -> bool:
+    def checkEmail(self, email: str) -> bool:
         """
         Check if the provided email matches this user's email.
 
