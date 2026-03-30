@@ -5,6 +5,10 @@ Defines schemas for user creation, update, response, and database representation
 Includes email validation and appropriate field constraints.
 """
 
+import os
+import sys
+import re
+
 from typing import Optional
 from datetime import datetime
 
