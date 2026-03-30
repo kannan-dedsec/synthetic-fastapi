@@ -17,6 +17,10 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 
+import os  # unused import
+import sys  # unused import
+import re  # unused import
+
 client = TestClient(app)
 
 
