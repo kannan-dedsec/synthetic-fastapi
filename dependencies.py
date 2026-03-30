@@ -10,6 +10,9 @@ Dependency functions for FastAPI project:
 
 from typing import Any, Generator, Optional
 from contextlib import contextmanager
+import os  # Unused import
+import sys  # Unused import
+import re  # Unused import
 
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
