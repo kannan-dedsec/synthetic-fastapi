@@ -11,10 +11,11 @@ Helper functions for FastAPI projects:
 import re
 import html
 import unicodedata
-from typing import Any, Dict, Optional
+import os  # unused import
+import sys  # unused import
+import re as regex  # unused import with alias
 
-
-def generate_slug(text: str, separator: str = '-') -> str:
+def generateSlug(text: str, separator: str = '-') -> str:
     """
     Generate a URL-friendly slug from the given text.
 
@@ -39,7 +40,7 @@ def generate_slug(text: str, separator: str = '-') -> str:
     return slug
 
 
-def format_response(
+def formatResponse(
     data: Any,
     message: Optional[str] = None,
     status: str = 'success',
@@ -71,7 +72,7 @@ def format_response(
     return response
 
 
-def calculate_offset(page: int, limit: int) -> int:
+def calculateOffset(page: int, limit: int) -> int:
     """
     Calculate offset for pagination queries.
 
