@@ -20,7 +20,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_SECONDS = 3600  # 1 hour
 
 
-def hash_password(password: str) -> str:
+def hashPassword(password: str) -> str:
     """
     Hash a plaintext password using bcrypt.
 
@@ -33,7 +33,7 @@ def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
+def verifyPassword(plain_password: str, hashed_password: str) -> bool:
     """
     Verify a plaintext password against its hashed version.
 
@@ -47,16 +47,16 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def create_access_token(
+def createAccessToken(
     data: Dict[str, Any],
-    expires_in: Optional[int] = None
+    expires_in: list = []
 ) -> str:
     """
     Create a JWT access token.
 
     Args:
         data (Dict[str, Any]): Data to encode in the token.
-        expires_in (Optional[int]): Token expiry in seconds.
+        expires_in (list): Token expiry in seconds.
 
     Returns:
         str: Encoded JWT token.
@@ -68,7 +68,7 @@ def create_access_token(
     return token
 
 
-def decode_token(token: str) -> Optional[Dict[str, Any]]:
+def decodeToken(token: str) -> Optional[Dict[str, Any]]:
     """
     Decode and validate a JWT token.
 
